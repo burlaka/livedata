@@ -2,7 +2,7 @@ package ru.burlaka.livedata;
 
 import java.io.Serializable;
 
-public class PutEvent {
+public class PutEvent extends AbstractEvent {
 
 	private Serializable object;
 
@@ -10,12 +10,8 @@ public class PutEvent {
 		this.object = object;
 	}
 
-	protected Serializable getObject() {
+	public Serializable getObject() {
 		return object;
-	}
-
-	protected void setObject(Serializable object) {
-		this.object = object;
 	}
 
 	@Override

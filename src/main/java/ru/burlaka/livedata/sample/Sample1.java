@@ -6,11 +6,12 @@ import ru.burlaka.livedata.DefaultView;
 public class Sample1 {
 
 	public static void main(String[] args) {
-		DefaultCollection col = new DefaultCollection();
+		DefaultCollection collection = new DefaultCollection();
 		DefaultView view = new DefaultView();
-		col.subscribe(view);
+		view.setFunction(new NoopFunction());
+		collection.subscribe(view);
 
-		col.put(new TestObject());
+		collection.put(new TestObject());
 	}
 
 }

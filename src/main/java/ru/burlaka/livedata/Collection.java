@@ -16,6 +16,8 @@ public interface Collection {
 
 	void put(Serializable object);
 
+	void put(Key key, Serializable object);
+
 	Serializable get(Key key);
 
 	Serializable remove(Key key);

@@ -14,6 +14,8 @@ public class AbstractCollection extends Observable implements Collection {
 
 	private String name;
 
+	private KeyFactory keyFactory = new UUIDKeyFactory();
+
 	@Override
 	public Key getKey() {
 		return key;
@@ -26,14 +28,23 @@ public class AbstractCollection extends Observable implements Collection {
 
 	@Override
 	public void put(Serializable object) {
-		doPut(object);
+		doPut(keyFactory.newKey(), object);
 		setChanged();
 		LOGGER.info("Put object: {} into collection: {}", object, this);
 
 		notifyObservers(new PutEvent(object));
 	}
 
-	protected void doPut(Serializable object) {
+	@Override
+	public void put(Key key, Serializable object) {
+		doPut(key, object);
+		setChanged();
+		LOGGER.info("Put object: {} into collection: {}", object, this);
+
+		notifyObservers(new PutEvent(object));
+	}
+
+	protected void doPut(Key key, Serializable object) {
 		// TODO Auto-generated method stub
 
 	}

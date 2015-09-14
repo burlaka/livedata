@@ -8,6 +8,10 @@ public class UUIDKey implements Key {
 
 	private UUID value;
 
+	public UUIDKey(UUID uuid) {
+		this.value = uuid;
+	}
+
 	@Override
 	public boolean equals(Key key) {
 		return false;
