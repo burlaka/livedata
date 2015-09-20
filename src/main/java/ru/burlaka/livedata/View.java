@@ -8,12 +8,15 @@ import java.io.Serializable;
  * @author Denis Burlaka
  *
  */
-public interface View {
+// TODO: убрать CollectionListener от сюда
+public interface View extends CollectionListener {
 
 	Key getKey();
 
 	String getName();
 
 	Serializable get(Key key);
+
+	void setFunction(Function function);
 
 }

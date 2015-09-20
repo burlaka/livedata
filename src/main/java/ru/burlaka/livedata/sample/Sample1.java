@@ -1,17 +1,24 @@
 package ru.burlaka.livedata.sample;
 
-import ru.burlaka.livedata.DefaultCollection;
-import ru.burlaka.livedata.DefaultView;
+import java.util.HashMap;
+import java.util.Map;
+
+import ru.burlaka.livedata.Collection;
+import ru.burlaka.livedata.CollectionImpl;
+import ru.burlaka.livedata.View;
+import ru.burlaka.livedata.ViewImpl;
 
 public class Sample1 {
 
 	public static void main(String[] args) {
-		DefaultCollection collection = new DefaultCollection();
-		DefaultView view = new DefaultView();
+		Collection collection = new CollectionImpl();
+		View view = new ViewImpl();
 		view.setFunction(new NoopFunction());
 		collection.subscribe(view);
 
-		collection.put(new TestObject());
+		Map<String, Object> map = new HashMap<>();
+		map.put("field1", "aaa");
+		collection.put(map);
 	}
 
 }

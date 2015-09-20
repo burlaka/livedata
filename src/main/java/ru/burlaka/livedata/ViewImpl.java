@@ -1,22 +1,21 @@
 package ru.burlaka.livedata;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Observable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ru.burlaka.livedata.sample.NoopFunction;
+public class ViewImpl implements View {
 
-public class AbstractView implements View, CollectionListener {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractView.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ViewImpl.class);
 
 	private Key key;
 
 	private String name;
 
-	private Collection data = new DefaultCollection();
+	private Collection data = new CollectionImpl();
 
 	private Function function;
 
@@ -30,7 +29,8 @@ public class AbstractView implements View, CollectionListener {
 		return (name != null && !name.isEmpty()) ? name : key.toString();
 	}
 
-	public void setFunction(NoopFunction function) {
+	@Override
+	public void setFunction(Function function) {
 		this.function = function;
 	}
 
@@ -44,8 +44,11 @@ public class AbstractView implements View, CollectionListener {
 		LOGGER.info("Update event recieved: {}", event);
 
 		if (function != null) {
-			data.put(function.eval(((AbstractEvent) event).getObject()));
+			data.put(toMap(function.eval(((AbstractEvent) event).getObject())));
 		}
 	}
 
+	private Map<String, Object> toMap(Object object) {
+		return null;
+	}
 }

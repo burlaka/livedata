@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public interface Function {
 
+	Serializable eval();
+
 	Serializable eval(Serializable object);
 
 }

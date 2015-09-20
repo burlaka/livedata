@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class PutEvent extends AbstractEvent {
 
-	private Serializable object;
+	private StorableObject object;
 
-	public PutEvent(Serializable object) {
+	public PutEvent(StorableObject object) {
 		this.object = object;
 	}
 
