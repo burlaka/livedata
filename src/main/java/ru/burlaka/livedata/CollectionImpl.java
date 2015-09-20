@@ -25,9 +25,11 @@ public class CollectionImpl extends Observable implements Collection {
 	private String name;
 
 	/**
-	 * Имя поля -> поле.
+	 * Поля содержащие данные. Имя поля -> поле.
 	 */
-	private Map<String, Field> fieldsByName = new HashMap<>();
+	private Map<String, DataField> dataFieldsByName = new HashMap<>();
+
+	private Map<String, EvalField> evalFieldsByName = new HashMap<>();
 
 	private BackedCollection bc = new SimpleCollection();
 
@@ -48,20 +50,20 @@ public class CollectionImpl extends Observable implements Collection {
 
 	@Override
 	public void put(Key key, Map<String, Object> fields) {
-		StorableObject storableObject = new StorableObject();
+		StorableObject storableObject = new StorableObject(keyFactory.newKey());
 		fields.forEach((fieldName, fieldValue) -> {
-			Field field = fieldsByName.get(fieldName);
+			DataField field = dataFieldsByName.get(fieldName);
 			if (field != null) {
-				if (field.getType() == FieldType.CALCULATED) {
-					EvalField evalField = (EvalField) field;
-					storableObject.set(fieldName, evalField.eval());
-				} else {
-					DataField dataField = (DataField) field;
-					if (dataField.validate(fieldValue)) {
-						storableObject.set(fieldName, fieldValue);
-					}
+				if (field.validate(fieldValue)) {
+					storableObject.set(fieldName, fieldValue);
 				}
+			} else {
+				LOGGER.warn("No field with name={} found. Ingrored.", fieldName);
 			}
+		});
+
+		evalFieldsByName.forEach((fieldName, field) -> {
+
 		});
 
 		bc.put(storableObject);
@@ -94,8 +96,13 @@ public class CollectionImpl extends Observable implements Collection {
 	}
 
 	@Override
-	public void addField(Field field) {
-		fieldsByName.put(field.getName(), field);
+	public void addField(DataField field) {
+		dataFieldsByName.put(field.getName(), field);
+	}
+
+	@Override
+	public void addField(EvalField field) {
+		evalFieldsByName.put(field.getName(), field);
 	}
 
 	@Override

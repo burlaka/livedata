@@ -1,6 +1,6 @@
 package ru.burlaka.livedata;
 
-public interface DataField {
+public interface DataField extends Field {
 
 	boolean validate(Object fieldValue);
 

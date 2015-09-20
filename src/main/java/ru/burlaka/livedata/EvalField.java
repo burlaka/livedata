@@ -1,6 +1,6 @@
 package ru.burlaka.livedata;
 
-public interface EvalField {
+public interface EvalField extends Field {
 
 	Object eval();
 

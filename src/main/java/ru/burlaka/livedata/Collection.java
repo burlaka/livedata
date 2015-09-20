@@ -30,7 +30,9 @@ public interface Collection {
 
 	void subscribe(CollectionListener listener);
 
-	void addField(Field field);
+	void addField(DataField field);
+
+	void addField(EvalField field);
 
 	void removeField(Field field);
 

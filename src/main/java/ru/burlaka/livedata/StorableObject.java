@@ -10,9 +10,11 @@ public class StorableObject implements Serializable {
 
 	private Key id;
 
-	private Map<Key, Field> fields = new HashMap<>();
+	private Map<String, Object> fieldValues = new HashMap<>();
 
-	private Map<String, Object> values = new HashMap<>();
+	public StorableObject(Key id) {
+		this.id = id;
+	}
 
 	public Key getId() {
 		return id;
@@ -23,12 +25,12 @@ public class StorableObject implements Serializable {
 	}
 
 	public void set(String key, Object value) {
-		values.put(key, value);
+		fieldValues.put(key, value);
 	}
 
 	@Override
 	public String toString() {
-		return "StorableObject [id=" + id + ", fields=" + fields + ", values=" + values + "]";
+		return "StorableObject [id=" + id + ", fieldValues=" + fieldValues + "]";
 	}
 
 }

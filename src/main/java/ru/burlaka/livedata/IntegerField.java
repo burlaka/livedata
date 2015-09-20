@@ -15,7 +15,7 @@ public class IntegerField extends AbstractField implements DataField {
 
 	@Override
 	public boolean validate(Object fieldValue) {
-		return false;
+		return true;
 	}
 
 }
