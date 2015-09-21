@@ -1,10 +1,18 @@
 package ru.burlaka.livedata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ru.burlaka.livedata.test.SumFunction;
 
 public class DefaultEvalField extends AbstractField implements EvalField {
 
 	private static final long serialVersionUID = -8334739252927485519L;
+
+	/**
+	 * Listen on changes in the fields.
+	 */
+	private List<DataField> fields = new ArrayList<>();
 
 	private Function function;
 
@@ -25,6 +33,11 @@ public class DefaultEvalField extends AbstractField implements EvalField {
 	@Override
 	public Object eval() {
 		return function.eval();
+	}
+
+	@Override
+	public void subscribe(DataField field) {
+		fields.add(field);
 	}
 
 }

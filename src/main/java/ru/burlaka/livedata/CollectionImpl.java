@@ -62,8 +62,10 @@ public class CollectionImpl extends Observable implements Collection {
 			}
 		});
 
+		// TODO: Вызывать только те функции, которые зависять от изменённых
+		// полей. Сейчас вызываются все функции.
 		evalFieldsByName.forEach((fieldName, field) -> {
-
+			storableObject.set(fieldName, field.eval());
 		});
 
 		bc.put(storableObject);
@@ -114,5 +116,10 @@ public class CollectionImpl extends Observable implements Collection {
 	@Override
 	public String toString() {
 		return bc.toString();
+	}
+
+	@Override
+	public long size() {
+		return bc.size();
 	}
 }

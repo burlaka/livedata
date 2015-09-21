@@ -36,4 +36,6 @@ public interface Collection {
 
 	void removeField(Field field);
 
+	long size();
+
 }

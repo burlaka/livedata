@@ -8,7 +8,8 @@ public class SumFunction implements Function {
 
 	@Override
 	public Serializable eval() {
-		return 4;
+		System.out.println("Sum function invoked!");
+		return null;
 	}
 
 	@Override
