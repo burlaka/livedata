@@ -17,6 +17,6 @@ public interface View extends CollectionListener {
 
 	Serializable get(Key key);
 
-	void setFunction(Function function);
+	void setFunction(MapFunction function);
 
 }

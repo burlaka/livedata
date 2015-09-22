@@ -1,21 +1,13 @@
 package ru.burlaka.livedata.test;
 
-import java.io.Serializable;
-
 import ru.burlaka.livedata.Function;
+import ru.burlaka.livedata.StorableObject;
 
 public class SumFunction implements Function {
 
 	@Override
-	public Serializable eval() {
-		System.out.println("Sum function invoked!");
-		return null;
-	}
-
-	@Override
-	public Serializable eval(Serializable object) {
-		// TODO Auto-generated method stub
-		return null;
+	public Object eval(StorableObject object) {
+		return (Integer) object.get("f1") + (Integer) object.get("f2");
 	}
 
 }

@@ -17,7 +17,7 @@ public class ViewImpl implements View {
 
 	private Collection data = new CollectionImpl();
 
-	private Function function;
+	private MapFunction function;
 
 	@Override
 	public Key getKey() {
@@ -30,7 +30,7 @@ public class ViewImpl implements View {
 	}
 
 	@Override
-	public void setFunction(Function function) {
+	public void setFunction(MapFunction function) {
 		this.function = function;
 	}
 

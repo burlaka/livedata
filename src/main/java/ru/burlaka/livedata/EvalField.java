@@ -4,6 +4,6 @@ public interface EvalField extends Field {
 
 	void subscribe(DataField field);
 
-	Object eval();
+	Object eval(StorableObject object);
 
 }

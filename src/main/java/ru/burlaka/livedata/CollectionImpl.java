@@ -1,6 +1,5 @@
 package ru.burlaka.livedata;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -44,12 +43,12 @@ public class CollectionImpl extends Observable implements Collection {
 	}
 
 	@Override
-	public void put(Map<String, Object> fields) {
-		put(keyFactory.newKey(), fields);
+	public Key put(Map<String, Object> fields) {
+		return put(keyFactory.newKey(), fields);
 	}
 
 	@Override
-	public void put(Key key, Map<String, Object> fields) {
+	public Key put(Key key, Map<String, Object> fields) {
 		StorableObject storableObject = new StorableObject(keyFactory.newKey());
 		fields.forEach((fieldName, fieldValue) -> {
 			DataField field = dataFieldsByName.get(fieldName);
@@ -65,7 +64,7 @@ public class CollectionImpl extends Observable implements Collection {
 		// TODO: Вызывать только те функции, которые зависять от изменённых
 		// полей. Сейчас вызываются все функции.
 		evalFieldsByName.forEach((fieldName, field) -> {
-			storableObject.set(fieldName, field.eval());
+			storableObject.set(fieldName, field.eval(storableObject));
 		});
 
 		bc.put(storableObject);
@@ -74,16 +73,17 @@ public class CollectionImpl extends Observable implements Collection {
 		LOGGER.info("Put object: {} into collection. New size: {}", fields, bc.size());
 
 		notifyObservers(new PutEvent(storableObject));
+		return storableObject.getId();
 	}
 
 	@Override
-	public Serializable get(Key key) {
+	public StorableObject get(Key key) {
 		return bc.get(key);
 	}
 
 	@Override
-	public Serializable remove(Key key) {
-		Serializable object = bc.remove(key);
+	public StorableObject remove(Key key) {
+		StorableObject object = bc.remove(key);
 		setChanged();
 		LOGGER.info("Remove object: {} from collection: {}", object, this);
 

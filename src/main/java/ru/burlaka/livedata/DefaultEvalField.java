@@ -31,8 +31,8 @@ public class DefaultEvalField extends AbstractField implements EvalField {
 	}
 
 	@Override
-	public Object eval() {
-		return function.eval();
+	public Object eval(StorableObject object) {
+		return function.eval(object);
 	}
 
 	@Override

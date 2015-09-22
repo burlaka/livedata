@@ -24,8 +24,12 @@ public class StorableObject implements Serializable {
 		this.id = id;
 	}
 
-	public void set(String key, Object value) {
-		fieldValues.put(key, value);
+	public Object get(String name) {
+		return fieldValues.get(name);
+	}
+
+	public void set(String name, Object value) {
+		fieldValues.put(name, value);
 	}
 
 	@Override

@@ -13,7 +13,6 @@ public class Sample1 {
 	public static void main(String[] args) {
 		Collection collection = new CollectionImpl();
 		View view = new ViewImpl();
-		view.setFunction(new NoopFunction());
 		collection.subscribe(view);
 
 		Map<String, Object> map = new HashMap<>();

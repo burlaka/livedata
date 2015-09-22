@@ -1,6 +1,5 @@
 package ru.burlaka.livedata;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -20,13 +19,13 @@ public interface Collection {
 	 * 
 	 * @param object
 	 */
-	void put(Map<String, Object> fields);
+	Key put(Map<String, Object> fields);
 
-	void put(Key key, Map<String, Object> fields);
+	Key put(Key key, Map<String, Object> fields);
 
-	Serializable get(Key key);
+	StorableObject get(Key key);
 
-	Serializable remove(Key key);
+	StorableObject remove(Key key);
 
 	void subscribe(CollectionListener listener);
 

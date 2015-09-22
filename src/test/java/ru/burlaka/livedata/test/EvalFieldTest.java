@@ -10,6 +10,8 @@ import ru.burlaka.livedata.CollectionImpl;
 import ru.burlaka.livedata.DataField;
 import ru.burlaka.livedata.DefaultEvalField;
 import ru.burlaka.livedata.IntegerField;
+import ru.burlaka.livedata.Key;
+import ru.burlaka.livedata.StorableObject;
 
 public class EvalFieldTest {
 
@@ -29,10 +31,15 @@ public class EvalFieldTest {
 		HashMap<String, Object> fields = new HashMap<>();
 		fields.put("f1", 3);
 		fields.put("f2", 5);
-		col.put(fields);
+		Key id = col.put(fields);
+		StorableObject object = col.get(id);
 
 		System.out.println(col.toString());
 		Assert.assertEquals(1, col.size());
+		Assert.assertNotNull(object.getId());
+		Assert.assertEquals(3, object.get("f1"));
+		Assert.assertEquals(5, object.get("f2"));
+		Assert.assertEquals(8, object.get("f3"));
 	}
 
 }
