@@ -1,6 +1,7 @@
 package ru.burlaka.livedata;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 public abstract class AbstractField implements Field, Serializable {
@@ -11,7 +12,7 @@ public abstract class AbstractField implements Field, Serializable {
 
 	private String name;
 
-	private Set<Field> dependencies;
+	private Set<Field> dependencies = new HashSet<>();
 
 	public AbstractField(String name) {
 		this.name = name;
