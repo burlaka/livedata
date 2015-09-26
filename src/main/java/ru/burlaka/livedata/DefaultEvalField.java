@@ -3,8 +3,6 @@ package ru.burlaka.livedata;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.burlaka.livedata.test.SumFunction;
-
 import com.google.common.eventbus.Subscribe;
 
 public class DefaultEvalField extends AbstractField implements EvalField {
@@ -22,7 +20,7 @@ public class DefaultEvalField extends AbstractField implements EvalField {
 		super(name);
 	}
 
-	public DefaultEvalField(String name, SumFunction function) {
+	public DefaultEvalField(String name, Function function) {
 		super(name);
 		this.function = function;
 	}
