@@ -1,5 +1,6 @@
 package ru.burlaka.livedata;
 
+
 public class IntegerField extends AbstractField implements DataField {
 
 	private static final long serialVersionUID = -1831958843875060514L;

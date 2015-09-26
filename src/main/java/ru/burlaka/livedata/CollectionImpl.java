@@ -1,11 +1,12 @@
 package ru.burlaka.livedata;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.eventbus.EventBus;
 
 public class CollectionImpl extends Observable implements Collection {
 
@@ -23,14 +24,11 @@ public class CollectionImpl extends Observable implements Collection {
 	 */
 	private String name;
 
-	/**
-	 * Поля содержащие данные. Имя поля -> поле.
-	 */
-	private Map<String, DataField> dataFieldsByName = new HashMap<>();
-
-	private Map<String, EvalField> evalFieldsByName = new HashMap<>();
+	private Fields fields = new Fields();
 
 	private BackedCollection bc = new SimpleCollection();
+
+	private EventBus eventBus;
 
 	@Override
 	public Key getKey() {
@@ -48,10 +46,10 @@ public class CollectionImpl extends Observable implements Collection {
 	}
 
 	@Override
-	public Key put(Key key, Map<String, Object> fields) {
+	public Key put(Key key, Map<String, Object> pairs) {
 		StorableObject storableObject = new StorableObject(keyFactory.newKey());
-		fields.forEach((fieldName, fieldValue) -> {
-			DataField field = dataFieldsByName.get(fieldName);
+		pairs.forEach((fieldName, fieldValue) -> {
+			DataField field = fields.dataField(fieldName);
 			if (field != null) {
 				if (field.validate(fieldValue)) {
 					storableObject.set(fieldName, fieldValue);
@@ -63,14 +61,14 @@ public class CollectionImpl extends Observable implements Collection {
 
 		// TODO: Вызывать только те функции, которые зависять от изменённых
 		// полей. Сейчас вызываются все функции.
-		evalFieldsByName.forEach((fieldName, field) -> {
+		fields.evalFields().forEach((fieldName, field) -> {
 			storableObject.set(fieldName, field.eval(storableObject));
 		});
 
 		bc.put(storableObject);
 
 		setChanged();
-		LOGGER.info("Put object: {} into collection. New size: {}", fields, bc.size());
+		LOGGER.info("Put object: {} into collection. New size: {}", pairs, bc.size());
 
 		notifyObservers(new PutEvent(storableObject));
 		return storableObject.getId();
@@ -99,12 +97,12 @@ public class CollectionImpl extends Observable implements Collection {
 
 	@Override
 	public void addField(DataField field) {
-		dataFieldsByName.put(field.getName(), field);
+		fields.put(field);
 	}
 
 	@Override
 	public void addField(EvalField field) {
-		evalFieldsByName.put(field.getName(), field);
+		fields.put(field);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package ru.burlaka.livedata;
 
 import java.io.Serializable;
+import java.util.Set;
 
 public abstract class AbstractField implements Field, Serializable {
 
@@ -9,6 +10,8 @@ public abstract class AbstractField implements Field, Serializable {
 	private Key id;
 
 	private String name;
+
+	private Set<Field> dependencies;
 
 	public AbstractField(String name) {
 		this.name = name;
@@ -23,4 +26,10 @@ public abstract class AbstractField implements Field, Serializable {
 	public String getName() {
 		return name;
 	}
+
+	@Override
+	public Set<Field> getDependencies() {
+		return dependencies;
+	}
+
 }

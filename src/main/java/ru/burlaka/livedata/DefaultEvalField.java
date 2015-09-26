@@ -5,6 +5,8 @@ import java.util.List;
 
 import ru.burlaka.livedata.test.SumFunction;
 
+import com.google.common.eventbus.Subscribe;
+
 public class DefaultEvalField extends AbstractField implements EvalField {
 
 	private static final long serialVersionUID = -8334739252927485519L;
@@ -38,6 +40,11 @@ public class DefaultEvalField extends AbstractField implements EvalField {
 	@Override
 	public void subscribe(DataField field) {
 		fields.add(field);
+	}
+
+	@Subscribe
+	public void recordCustomerChange() {
+		System.out.println("asd");
 	}
 
 }
