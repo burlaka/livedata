@@ -3,4 +3,4 @@ machine:
     version: oraclejdk8
 general:
   artifacts:
-    "target/*.jar"
+    - "target/*.jar"
