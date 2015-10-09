@@ -33,10 +33,18 @@ public class EvalFieldTest {
 		f4.subscribe(f3);
 		col.addField(f4);
 
+		EvalFieldImpl f5 = new EvalFieldImpl("f5", new SumFunction("f3", "f4"));
+		f5.subscribe(f3);
+		f5.subscribe(f4);
+		col.addField(f5);
+
+		// put object in collection
 		HashMap<String, Object> fields = new HashMap<>();
 		fields.put("f1", 3);
 		fields.put("f2", 5);
 		Key id = col.put(fields);
+
+		// get object from collection with evaluated fields
 		StorableObject object = col.get(id);
 
 		System.out.println(col.toString());
@@ -46,6 +54,7 @@ public class EvalFieldTest {
 		Assert.assertEquals(5, object.get("f2"));
 		Assert.assertEquals(8, object.get("f3"));
 		Assert.assertEquals(11, object.get("f4"));
+		Assert.assertEquals(19, object.get("f5"));
 	}
 
 }

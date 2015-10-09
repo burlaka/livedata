@@ -7,8 +7,6 @@ import java.util.Map;
 import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
 import org.jgrapht.graph.DefaultEdge;
 
-import com.google.common.eventbus.EventBus;
-
 public class Fields {
 
 	/**
@@ -26,8 +24,6 @@ public class Fields {
 	 */
 	private DirectedAcyclicGraph<Field, DefaultEdge> fields = new DirectedAcyclicGraph<Field, DefaultEdge>(
 			DefaultEdge.class);
-
-	private EventBus eventBus = new EventBus();
 
 	public DataField dataField(String fieldName) {
 		return dataFieldsByName.get(fieldName);

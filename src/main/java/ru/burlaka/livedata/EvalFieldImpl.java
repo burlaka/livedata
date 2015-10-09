@@ -3,8 +3,6 @@ package ru.burlaka.livedata;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.google.common.eventbus.Subscribe;
-
 public class EvalFieldImpl extends AbstractField implements EvalField {
 
 	private static final long serialVersionUID = -8334739252927485519L;
@@ -38,11 +36,6 @@ public class EvalFieldImpl extends AbstractField implements EvalField {
 	@Override
 	public void subscribe(Field field) {
 		dependencies.add(field);
-	}
-
-	@Subscribe
-	public void recordCustomerChange() {
-		System.out.println("asd");
 	}
 
 	@Override
