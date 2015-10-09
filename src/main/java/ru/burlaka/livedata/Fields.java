@@ -4,9 +4,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
 import org.jgrapht.graph.DefaultEdge;
+
+import com.google.common.eventbus.EventBus;
 
 public class Fields {
 
@@ -23,7 +24,10 @@ public class Fields {
 	/**
 	 * Граф полей для контроля циклических ссылок.
 	 */
-	private DirectedGraph<Field, DefaultEdge> fields = new DefaultDirectedGraph<Field, DefaultEdge>(DefaultEdge.class);
+	private DirectedAcyclicGraph<Field, DefaultEdge> fields = new DirectedAcyclicGraph<Field, DefaultEdge>(
+			DefaultEdge.class);
+
+	private EventBus eventBus = new EventBus();
 
 	public DataField dataField(String fieldName) {
 		return dataFieldsByName.get(fieldName);
@@ -48,8 +52,12 @@ public class Fields {
 
 	public void put(EvalField field) {
 		fields.addVertex(field);
-		field.getDependencies().stream().forEach(dependecy -> {
-			fields.addEdge(dependecy, field);
+		field.dependencies().stream().forEach(dependency -> {
+			try {
+				fields.addEdge(dependency, field);
+			} catch (IllegalArgumentException e) {
+				throw new CycleDependenciesException(e);
+			}
 		});
 		evalFieldsByName.put(field.getName(), field);
 	}

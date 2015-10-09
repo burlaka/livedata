@@ -8,7 +8,7 @@ import org.junit.Test;
 import ru.burlaka.livedata.Collection;
 import ru.burlaka.livedata.CollectionImpl;
 import ru.burlaka.livedata.DataField;
-import ru.burlaka.livedata.DefaultEvalField;
+import ru.burlaka.livedata.EvalFieldImpl;
 import ru.burlaka.livedata.IntegerField;
 import ru.burlaka.livedata.Key;
 import ru.burlaka.livedata.StorableObject;
@@ -23,10 +23,15 @@ public class EvalFieldTest {
 		DataField f2 = new IntegerField("f2");
 		col.addField(f2);
 
-		DefaultEvalField f3 = new DefaultEvalField("f3", new SumFunction());
+		EvalFieldImpl f3 = new EvalFieldImpl("f3", new SumFunction("f1", "f2"));
 		f3.subscribe(f1);
 		f3.subscribe(f2);
 		col.addField(f3);
+
+		EvalFieldImpl f4 = new EvalFieldImpl("f4", new SumFunction("f1", "f3"));
+		f4.subscribe(f1);
+		f4.subscribe(f3);
+		col.addField(f4);
 
 		HashMap<String, Object> fields = new HashMap<>();
 		fields.put("f1", 3);
@@ -40,6 +45,7 @@ public class EvalFieldTest {
 		Assert.assertEquals(3, object.get("f1"));
 		Assert.assertEquals(5, object.get("f2"));
 		Assert.assertEquals(8, object.get("f3"));
+		Assert.assertEquals(11, object.get("f4"));
 	}
 
 }

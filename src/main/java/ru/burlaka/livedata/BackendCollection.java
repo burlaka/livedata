@@ -1,6 +1,6 @@
 package ru.burlaka.livedata;
 
-public interface BackedCollection {
+public interface BackendCollection {
 
 	StorableObject get(Key key);
 

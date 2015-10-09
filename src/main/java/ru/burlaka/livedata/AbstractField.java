@@ -1,20 +1,19 @@
 package ru.burlaka.livedata;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 public abstract class AbstractField implements Field, Serializable {
 
 	private static final long serialVersionUID = 4717581508406239433L;
 
+	private KeyFactory keyFactory = new UUIDKeyFactory();
+
 	private Key id;
 
 	private String name;
 
-	private Set<Field> dependencies = new HashSet<>();
-
 	public AbstractField(String name) {
+		this.id = keyFactory.newKey();
 		this.name = name;
 	}
 
@@ -26,11 +25,6 @@ public abstract class AbstractField implements Field, Serializable {
 	@Override
 	public String getName() {
 		return name;
-	}
-
-	@Override
-	public Set<Field> getDependencies() {
-		return dependencies;
 	}
 
 }

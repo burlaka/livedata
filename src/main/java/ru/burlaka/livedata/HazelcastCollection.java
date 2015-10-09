@@ -1,30 +1,25 @@
 package ru.burlaka.livedata;
 
-
-public class HazelcastCollection implements BackedCollection {
+public class HazelcastCollection implements BackendCollection {
 
 	@Override
 	public StorableObject get(Key key) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public void put(StorableObject storableObject) {
-		// TODO Auto-generated method stub
-
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public StorableObject remove(Key key) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public long size() {
-		// TODO Auto-generated method stub
-		return 0;
+		throw new NotImplementedException();
 	}
 
 }

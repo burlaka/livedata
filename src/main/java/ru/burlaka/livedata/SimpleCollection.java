@@ -3,7 +3,7 @@ package ru.burlaka.livedata;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SimpleCollection implements BackedCollection {
+public class SimpleCollection implements BackendCollection {
 
 	private Map<Key, StorableObject> data = new HashMap<>();
 

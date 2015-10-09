@@ -1,7 +1,5 @@
 package ru.burlaka.livedata;
 
-import java.util.Set;
-
 public interface Field {
 
 	Key getId();
@@ -9,7 +7,5 @@ public interface Field {
 	String getName();
 
 	FieldType getType();
-
-	Set<Field> getDependencies();
 
 }

@@ -6,8 +6,6 @@ import java.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.eventbus.EventBus;
-
 public class CollectionImpl extends Observable implements Collection {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CollectionImpl.class);
@@ -15,7 +13,7 @@ public class CollectionImpl extends Observable implements Collection {
 	private static final KeyFactory keyFactory = new UUIDKeyFactory();
 
 	/**
-	 * Унакальный идентификатор коллекции.
+	 * Уникальный идентификатор коллекции.
 	 */
 	private Key id;
 
@@ -26,9 +24,7 @@ public class CollectionImpl extends Observable implements Collection {
 
 	private Fields fields = new Fields();
 
-	private BackedCollection bc = new SimpleCollection();
-
-	private EventBus eventBus;
+	private BackendCollection bc = new SimpleCollection();
 
 	@Override
 	public Key getKey() {
