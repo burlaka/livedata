@@ -23,17 +23,17 @@ public class EvalFieldTest {
 		DataField f2 = new IntegerField("f2");
 		col.addField(f2);
 
-		EvalFieldImpl f3 = new EvalFieldImpl("f3", new SumFunction("f1", "f2"));
+		EvalFieldImpl f3 = new EvalFieldImpl("e1", new SumFunction("f1", "f2"));
 		f3.subscribe(f1);
 		f3.subscribe(f2);
 		col.addField(f3);
 
-		EvalFieldImpl f4 = new EvalFieldImpl("f4", new SumFunction("f1", "f3"));
+		EvalFieldImpl f4 = new EvalFieldImpl("e2", new SumFunction("f1", "e1"));
 		f4.subscribe(f1);
 		f4.subscribe(f3);
 		col.addField(f4);
 
-		EvalFieldImpl f5 = new EvalFieldImpl("f5", new SumFunction("f3", "f4"));
+		EvalFieldImpl f5 = new EvalFieldImpl("e3", new SumFunction("e1", "e2"));
 		f5.subscribe(f3);
 		f5.subscribe(f4);
 		col.addField(f5);
@@ -52,9 +52,9 @@ public class EvalFieldTest {
 		Assert.assertNotNull(object.getId());
 		Assert.assertEquals(3, object.get("f1"));
 		Assert.assertEquals(5, object.get("f2"));
-		Assert.assertEquals(8, object.get("f3"));
-		Assert.assertEquals(11, object.get("f4"));
-		Assert.assertEquals(19, object.get("f5"));
+		Assert.assertEquals(8, object.get("e1"));
+		Assert.assertEquals(11, object.get("e2"));
+		Assert.assertEquals(19, object.get("e3"));
 	}
 
 }

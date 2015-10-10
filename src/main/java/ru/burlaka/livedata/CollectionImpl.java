@@ -1,7 +1,10 @@
 package ru.burlaka.livedata;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,31 +46,47 @@ public class CollectionImpl extends Observable implements Collection {
 
 	@Override
 	public Key put(Key key, Map<String, Object> pairs) {
-		StorableObject storableObject = new StorableObject(keyFactory.newKey());
-		pairs.forEach((fieldName, fieldValue) -> {
-			DataField field = fields.dataField(fieldName);
+		if (key == null) {
+			throw new IllegalArgumentException();
+		}
+
+		if (pairs == null) {
+			throw new IllegalArgumentException();
+		}
+
+		StorableObject storedObject = bc.get(key);
+		if (storedObject == null) {
+			storedObject = new StorableObject(key);
+		}
+
+		Set<DataField> changedFields = new HashSet<>();
+		for (Entry<String, Object> pair : pairs.entrySet()) {
+			DataField field = fields.dataField(pair.getKey());
 			if (field != null) {
-				if (field.validate(fieldValue)) {
-					storableObject.set(fieldName, fieldValue);
+				if (field.validate(pair.getValue())) {
+					storedObject.set(pair.getKey(), pair.getValue());
+					changedFields.add(field);
 				}
 			} else {
-				LOGGER.warn("No field with name={} found. Ingrored.", fieldName);
+				LOGGER.warn("No field with name={} found. Will be Ingrored.", pair.getKey());
 			}
-		});
+		}
 
-		// TODO: Вызывать только те функции, которые зависять от изменённых
-		// полей. Сейчас вызываются все функции.
-		fields.evalFields().forEach((fieldName, field) -> {
-			storableObject.set(fieldName, field.eval(storableObject));
-		});
+		for (DataField dataField : changedFields) {
+			for (EvalField evalField : fields.evalFields().values()) {
+				if (fields.hasPath(dataField, evalField)) {
+					storedObject.set(evalField.getName(), evalField.eval(storedObject));
+				}
+			}
+		}
 
-		bc.put(storableObject);
+		bc.put(storedObject);
 
 		setChanged();
-		LOGGER.info("Put object: {} into collection. New size: {}", pairs, bc.size());
+		LOGGER.info("Put object: {} into collection. Collection size: {}", pairs, bc.size());
 
-		notifyObservers(new PutEvent(storableObject));
-		return storableObject.getId();
+		notifyObservers(new PutEvent(storedObject));
+		return storedObject.getId();
 	}
 
 	@Override

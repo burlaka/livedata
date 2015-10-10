@@ -2,8 +2,10 @@ package ru.burlaka.livedata;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -56,5 +58,10 @@ public class Fields {
 			}
 		});
 		evalFieldsByName.put(field.getName(), field);
+	}
+
+	public boolean hasPath(DataField dataField, EvalField evalField) {
+		List<DefaultEdge> path = DijkstraShortestPath.findPathBetween(fields, dataField, evalField);
+		return path == null ? false : true;
 	}
 }
