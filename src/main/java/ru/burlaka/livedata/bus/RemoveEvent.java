@@ -1,4 +1,4 @@
-package ru.burlaka.livedata;
+package ru.burlaka.livedata.bus;
 
 import java.io.Serializable;
 

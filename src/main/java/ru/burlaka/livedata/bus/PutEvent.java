@@ -1,6 +1,8 @@
-package ru.burlaka.livedata;
+package ru.burlaka.livedata.bus;
 
 import java.io.Serializable;
+
+import ru.burlaka.livedata.StorableObject;
 
 public class PutEvent extends AbstractEvent {
 

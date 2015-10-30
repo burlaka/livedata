@@ -7,6 +7,8 @@ import java.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.burlaka.livedata.bus.AbstractEvent;
+
 public class ViewImpl implements View {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ViewImpl.class);

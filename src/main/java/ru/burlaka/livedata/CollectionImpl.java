@@ -9,6 +9,9 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.burlaka.livedata.bus.PutEvent;
+import ru.burlaka.livedata.bus.RemoveEvent;
+
 public class CollectionImpl extends Observable implements Collection {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CollectionImpl.class);
