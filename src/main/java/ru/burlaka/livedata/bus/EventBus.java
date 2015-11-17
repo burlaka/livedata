@@ -2,5 +2,6 @@ package ru.burlaka.livedata.bus;
 
 public interface EventBus {
 
-	void subscribe(Listener listener);
+	void on(String address, Consumer consumer);
+
 }

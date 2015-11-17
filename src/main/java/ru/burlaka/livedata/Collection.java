@@ -8,11 +8,7 @@ import java.util.Map;
  * @author Denis Burlaka
  *
  */
-public interface Collection {
-
-	Key getKey();
-
-	String getName();
+public interface Collection extends LiveObject {
 
 	/**
 	 * Store set of pairs into collection.
@@ -26,8 +22,6 @@ public interface Collection {
 	StorableObject get(Key key);
 
 	StorableObject remove(Key key);
-
-	void subscribe(CollectionListener listener);
 
 	void addField(DataField field);
 

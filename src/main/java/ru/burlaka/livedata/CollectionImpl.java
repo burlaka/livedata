@@ -3,48 +3,29 @@ package ru.burlaka.livedata;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Observable;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ru.burlaka.livedata.bus.Consumer;
+import ru.burlaka.livedata.bus.Event;
 import ru.burlaka.livedata.bus.PutEvent;
 import ru.burlaka.livedata.bus.RemoveEvent;
 
-public class CollectionImpl extends Observable implements Collection {
+public class CollectionImpl extends AbstractLiveObject implements Collection, Consumer {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CollectionImpl.class);
 
 	private static final KeyFactory keyFactory = new UUIDKeyFactory();
-
-	/**
-	 * Уникальный идентификатор коллекции.
-	 */
-	private Key id;
-
-	/**
-	 * Имя коллекции.
-	 */
-	private String name;
 
 	private Fields fields = new Fields();
 
 	private BackendCollection bc = new SimpleCollection();
 
 	@Override
-	public Key getKey() {
-		return id;
-	}
-
-	@Override
-	public String getName() {
-		return (name != null && !name.isEmpty()) ? name : id.toString();
-	}
-
-	@Override
-	public Key put(Map<String, Object> fields) {
-		return put(keyFactory.newKey(), fields);
+	public Key put(Map<String, Object> pairs) {
+		return put(keyFactory.newKey(), pairs);
 	}
 
 	@Override
@@ -109,11 +90,6 @@ public class CollectionImpl extends Observable implements Collection {
 	}
 
 	@Override
-	public void subscribe(CollectionListener listener) {
-		addObserver(listener);
-	}
-
-	@Override
 	public void addField(DataField field) {
 		fields.put(field);
 	}
@@ -137,5 +113,10 @@ public class CollectionImpl extends Observable implements Collection {
 	@Override
 	public long size() {
 		return bc.size();
+	}
+
+	@Override
+	public void handle(Event event) {
+		// TODO Auto-generated method stub
 	}
 }

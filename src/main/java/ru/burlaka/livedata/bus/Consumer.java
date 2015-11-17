@@ -1,6 +1,6 @@
 package ru.burlaka.livedata.bus;
 
-public interface Listener {
+public interface Consumer {
 
 	void handle(Event event);
 }
